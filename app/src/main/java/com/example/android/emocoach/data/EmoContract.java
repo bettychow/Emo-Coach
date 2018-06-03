@@ -39,6 +39,7 @@ public final class EmoContract {
         public final static String COLUMN_EMO_TYPE ="emo_type";
         public final static String COLUMN_DATE = "cDate";
         public final static String COLUMN_MONTH = "cMonth";
+        public final static String COLUMN_TIMESTAMP = "timestamp";
 
 
         /**

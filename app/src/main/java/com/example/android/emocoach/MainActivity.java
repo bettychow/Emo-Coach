@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.emocoach.data.EmoContract;
+import com.example.android.emocoach.data.EmoContract.EmoEntry;
 import com.example.android.emocoach.data.EmoDbHelper;
 
 import org.w3c.dom.Text;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private int cDay;
     private int cMonth;
     private int cYear;
-    private int cTime;
+    private long cTime;
     private String cDate;
     private RadioGroup rGroup;
     private RadioButton checkedRadioButton;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         cDay = calendar.get(Calendar.DAY_OF_MONTH);
         cMonth = calendar.get(Calendar.MONTH) + 1;
         cYear = calendar.get(Calendar.YEAR);
+        cTime = System.currentTimeMillis();
 
 
         tvCurrentDate.setText("Today is " + "" + cMonth + "/" + cDay + "/" + cYear);
@@ -121,10 +123,11 @@ public class MainActivity extends AppCompatActivity {
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
                     ContentValues values = new ContentValues();
-                    values.put(EmoContract.EmoEntry.COLUMN_EMO_TYPE, selectedRadioButtonText);
-                    values.put(EmoContract.EmoEntry.COLUMN_MONTH, cMonth);
-                    values.put(EmoContract.EmoEntry.COLUMN_DATE, cDate);
-                    long newRowId = db.insert(EmoContract.EmoEntry.TABLE_NAME, null, values);
+                    values.put(EmoEntry.COLUMN_EMO_TYPE, selectedRadioButtonText);
+                    values.put(EmoEntry.COLUMN_MONTH, cMonth);
+                    values.put(EmoEntry.COLUMN_DATE, cDate);
+                    values.put(EmoEntry.COLUMN_TIMESTAMP, cTime);
+                    long newRowId = db.insert(EmoEntry.TABLE_NAME, null, values);
 
                     //Uri newUri = getContentResolver().insert(EmoContract.EmoEntry.CONTENT_URI, values);
 
@@ -155,11 +158,13 @@ public class MainActivity extends AppCompatActivity {
                 mDbHelper = new EmoDbHelper(getApplicationContext());
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+
                 ContentValues values = new ContentValues();
-                values.put(EmoContract.EmoEntry.COLUMN_EMO_TYPE, "Tired");
-                values.put(EmoContract.EmoEntry.COLUMN_MONTH, 5);
-                values.put(EmoContract.EmoEntry.COLUMN_DATE, "5/16/2018");
-                long newRowId = db.insert(EmoContract.EmoEntry.TABLE_NAME, null, values);
+                values.put(EmoEntry.COLUMN_EMO_TYPE, "Tired");
+                values.put(EmoEntry.COLUMN_MONTH, 5);
+                values.put(EmoEntry.COLUMN_DATE, "5/16/2018");
+                values.put(EmoEntry.COLUMN_TIMESTAMP, 1526454000000l);
+                long newRowId = db.insert(EmoEntry.TABLE_NAME, null, values);
                 displayDatabaseInfo();
             }
 
@@ -170,14 +175,14 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
-                EmoContract.EmoEntry._ID,
-                EmoContract.EmoEntry.COLUMN_EMO_TYPE};
+                EmoEntry._ID,
+                EmoEntry.COLUMN_EMO_TYPE};
         cDate = "" + cMonth + "/" + cDay + "/" + cYear;
 
         Cursor cursor = db.query(
-                EmoContract.EmoEntry.TABLE_NAME,
+                EmoEntry.TABLE_NAME,
                 projection,
-                EmoContract.EmoEntry.COLUMN_DATE +"=?",
+                EmoEntry.COLUMN_DATE +"=?",
                 new String[] {cDate},
                 null,
                 null,
@@ -189,8 +194,8 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             // Figure out the index of each column
-            int idColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry._ID);
-            int emoColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry.COLUMN_EMO_TYPE);
+            int idColumnIndex = cursor.getColumnIndex(EmoEntry._ID);
+            int emoColumnIndex = cursor.getColumnIndex(EmoEntry.COLUMN_EMO_TYPE);
 
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
@@ -228,10 +233,11 @@ public class MainActivity extends AppCompatActivity {
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         String[] projection = {
-                EmoContract.EmoEntry._ID,
-                EmoContract.EmoEntry.COLUMN_EMO_TYPE,
-                EmoContract.EmoEntry.COLUMN_MONTH,
-                EmoContract.EmoEntry.COLUMN_DATE};
+                EmoEntry._ID,
+                EmoEntry.COLUMN_EMO_TYPE,
+                EmoEntry.COLUMN_MONTH,
+                EmoEntry.COLUMN_DATE,
+                EmoEntry.COLUMN_TIMESTAMP};
 
         // Perform a query on the provider using the ContentResolver.
         // Use the {@link PetEntry#CONTENT_URI} to access the pet data.
@@ -245,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         cDate = "" + cMonth + "/" + cDay + "/" + cYear;
 
         Cursor cursor = db.query(
-                EmoContract.EmoEntry.TABLE_NAME,
+                EmoEntry.TABLE_NAME,
                 projection,
                 null,
                 null,
@@ -272,13 +278,14 @@ public class MainActivity extends AppCompatActivity {
             // the information from each column in this order.
             displayView.setText("The emos table contains " + cursor.getCount() + " emos.\n\n");
             displayView.append(
-                    EmoContract.EmoEntry._ID + " - " + EmoContract.EmoEntry.COLUMN_EMO_TYPE + " - " + EmoContract.EmoEntry.COLUMN_MONTH + " - " + EmoContract.EmoEntry.COLUMN_DATE);
+                    EmoEntry._ID + " - " + EmoEntry.COLUMN_EMO_TYPE + " - " + EmoEntry.COLUMN_MONTH + " - " + EmoEntry.COLUMN_DATE);
 
             // Figure out the index of each column
-            int idColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry._ID);
-            int emoColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry.COLUMN_EMO_TYPE);
-            int monthColumnIndex = cursor.getColumnIndex((EmoContract.EmoEntry.COLUMN_MONTH));
-            int dateColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry.COLUMN_DATE);
+            int idColumnIndex = cursor.getColumnIndex(EmoEntry._ID);
+            int emoColumnIndex = cursor.getColumnIndex(EmoEntry.COLUMN_EMO_TYPE);
+            int monthColumnIndex = cursor.getColumnIndex((EmoEntry.COLUMN_MONTH));
+            int dateColumnIndex = cursor.getColumnIndex(EmoEntry.COLUMN_DATE);
+            int timeStampColumnIndex = cursor.getColumnIndex(EmoEntry.COLUMN_TIMESTAMP);
 
             // Iterate through all the returned rows in the cursor
             while (cursor.moveToNext()) {
@@ -288,9 +295,10 @@ public class MainActivity extends AppCompatActivity {
                 String currentEmo = cursor.getString(emoColumnIndex);
                 int currentMonth = cursor.getInt(monthColumnIndex);
                 String currentDate = cursor.getString(dateColumnIndex);
+                long currentTime = cursor.getLong(timeStampColumnIndex);
 
                 // Display the values from each column of the current row in the cursor in the TextView
-                displayView.append(("\n" + currentID + " - " + currentEmo + " - " + currentMonth + " - " + currentDate));
+                displayView.append(("\n" + currentID + " - " + currentEmo + " - " + currentMonth + " - " + currentDate + " - " + currentTime));
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
