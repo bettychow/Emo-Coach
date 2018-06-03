@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView emotions;
     private Button btnGoCalendar;
     private Button btnSave;
+    private Button btnDummy;
     private int cDay;
     private int cMonth;
     private int cYear;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         tvCurrentDate = (TextView) findViewById((R.id.today));
         btnGoCalendar = (Button) findViewById(R.id.btnGoCalendar);
         btnSave = (Button) findViewById(R.id.btnSave);
+        btnDummy = (Button) findViewById(R.id.addDummy);
 
 //        Intent incomingIntent = getIntent();
 //        String date = incomingIntent.getStringExtra("date");
@@ -84,25 +86,6 @@ public class MainActivity extends AppCompatActivity {
         emotions = (TextView) findViewById(R.id.emotions);
         //checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
 
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                int selectedRadioButtonID = rGroup.getCheckedRadioButtonId();
-//
-//                if (selectedRadioButtonID != -1) {
-//
-//                    RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonID);
-//                    String selectedRadioButtonText = selectedRadioButton.getText().toString();
-//
-//                    emotions.setText(selectedRadioButtonText + " selected.");
-//                }
-//                else{
-//                    emotions.setText("Nothing selected from Radio Group.");
-//                }
-//
-//            }
-//        });
 
 
         rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -139,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
                     ContentValues values = new ContentValues();
                     values.put(EmoContract.EmoEntry.COLUMN_EMO_TYPE, selectedRadioButtonText);
+                    values.put(EmoContract.EmoEntry.COLUMN_MONTH, cMonth);
                     values.put(EmoContract.EmoEntry.COLUMN_DATE, cDate);
                     long newRowId = db.insert(EmoContract.EmoEntry.TABLE_NAME, null, values);
 
@@ -160,6 +144,23 @@ public class MainActivity extends AppCompatActivity {
                     emotions.setText("Nothing selected from Radio Group.");
                     displayDatabaseInfo();
                 }
+            }
+
+
+        });
+
+        btnDummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDbHelper = new EmoDbHelper(getApplicationContext());
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+                ContentValues values = new ContentValues();
+                values.put(EmoContract.EmoEntry.COLUMN_EMO_TYPE, "Tired");
+                values.put(EmoContract.EmoEntry.COLUMN_MONTH, 5);
+                values.put(EmoContract.EmoEntry.COLUMN_DATE, "5/16/2018");
+                long newRowId = db.insert(EmoContract.EmoEntry.TABLE_NAME, null, values);
+                displayDatabaseInfo();
             }
 
 
@@ -229,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
         String[] projection = {
                 EmoContract.EmoEntry._ID,
                 EmoContract.EmoEntry.COLUMN_EMO_TYPE,
+                EmoContract.EmoEntry.COLUMN_MONTH,
                 EmoContract.EmoEntry.COLUMN_DATE};
 
         // Perform a query on the provider using the ContentResolver.
@@ -245,8 +247,8 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.query(
                 EmoContract.EmoEntry.TABLE_NAME,
                 projection,
-                EmoContract.EmoEntry.COLUMN_DATE +"=?",
-                new String[] {cDate},
+                null,
+                null,
                 null,
                 null,
                 null
@@ -270,11 +272,12 @@ public class MainActivity extends AppCompatActivity {
             // the information from each column in this order.
             displayView.setText("The emos table contains " + cursor.getCount() + " emos.\n\n");
             displayView.append(
-                    EmoContract.EmoEntry._ID + " - " + EmoContract.EmoEntry.COLUMN_EMO_TYPE + " - " + EmoContract.EmoEntry.COLUMN_DATE);
+                    EmoContract.EmoEntry._ID + " - " + EmoContract.EmoEntry.COLUMN_EMO_TYPE + " - " + EmoContract.EmoEntry.COLUMN_MONTH + " - " + EmoContract.EmoEntry.COLUMN_DATE);
 
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry._ID);
             int emoColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry.COLUMN_EMO_TYPE);
+            int monthColumnIndex = cursor.getColumnIndex((EmoContract.EmoEntry.COLUMN_MONTH));
             int dateColumnIndex = cursor.getColumnIndex(EmoContract.EmoEntry.COLUMN_DATE);
 
             // Iterate through all the returned rows in the cursor
@@ -283,10 +286,11 @@ public class MainActivity extends AppCompatActivity {
                 // at the current row the cursor is on.
                 int currentID = cursor.getInt(idColumnIndex);
                 String currentEmo = cursor.getString(emoColumnIndex);
+                int currentMonth = cursor.getInt(monthColumnIndex);
                 String currentDate = cursor.getString(dateColumnIndex);
 
                 // Display the values from each column of the current row in the cursor in the TextView
-                displayView.append(("\n" + currentID + " - " + currentEmo + " - " + currentDate));
+                displayView.append(("\n" + currentID + " - " + currentEmo + " - " + currentMonth + " - " + currentDate));
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
