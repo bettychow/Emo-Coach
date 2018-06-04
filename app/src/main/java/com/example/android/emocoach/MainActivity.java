@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnGoCalendar;
     private Button btnSave;
     private Button btnDummy;
+    private Button btnReport;
     private int cDay;
     private int cMonth;
     private int cYear;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btnGoCalendar = (Button) findViewById(R.id.btnGoCalendar);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDummy = (Button) findViewById(R.id.addDummy);
+        btnReport = (Button) findViewById(R.id.thirty_days_report);
 
 //        Intent incomingIntent = getIntent();
 //        String date = incomingIntent.getStringExtra("date");
@@ -81,6 +83,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ThirtyDaysReport.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
         rGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
@@ -160,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 ContentValues values = new ContentValues();
-                values.put(EmoEntry.COLUMN_EMO_TYPE, "Tired");
+                values.put(EmoEntry.COLUMN_EMO_TYPE, "Frustrated");
                 values.put(EmoEntry.COLUMN_MONTH, 5);
-                values.put(EmoEntry.COLUMN_DATE, "5/16/2018");
-                values.put(EmoEntry.COLUMN_TIMESTAMP, 1526454000000l);
+                values.put(EmoEntry.COLUMN_DATE, "5/27/2018");
+                values.put(EmoEntry.COLUMN_TIMESTAMP, 1527404400000L);
                 long newRowId = db.insert(EmoEntry.TABLE_NAME, null, values);
                 displayDatabaseInfo();
             }

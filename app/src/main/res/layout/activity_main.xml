@@ -26,6 +26,11 @@
         android:id="@+id/addDummy"
         android:text="Add Dummy"/>
 
+    <Button
+        android:id="@+id/thirty_days_report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
