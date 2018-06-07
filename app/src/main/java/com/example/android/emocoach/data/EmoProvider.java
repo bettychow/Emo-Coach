@@ -47,7 +47,7 @@ public class EmoProvider extends ContentProvider {
         switch (match) {
             case EMOS:
                 cursor = database.query(
-                        EmoContract.EmoEntry.TABLE_NAME,
+                        EmoContract.EmoEntry.TABLE_EMOS,
                         projection,
                         selection,
                         selectionArgs,
@@ -91,7 +91,7 @@ public class EmoProvider extends ContentProvider {
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
         // TODO: Insert a new pet into the pets database table with the given ContentValues
 
-        long id = database.insert(EmoContract.EmoEntry.TABLE_NAME, null, values);
+        long id = database.insert(EmoContract.EmoEntry.TABLE_EMOS, null, values);
 
         if(id == -1) {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);

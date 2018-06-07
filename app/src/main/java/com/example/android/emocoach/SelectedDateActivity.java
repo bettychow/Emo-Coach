@@ -37,7 +37,7 @@ public class SelectedDateActivity extends AppCompatActivity {
 
 
         Cursor cursor = db.query(
-                EmoContract.EmoEntry.TABLE_NAME,
+                EmoContract.EmoEntry.TABLE_EMOS,
                 projection,
                 EmoContract.EmoEntry.COLUMN_DATE +"=?",
                 new String[] {date},

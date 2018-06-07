@@ -28,7 +28,10 @@ public final class EmoContract {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EMOS;
 
         /** Name of database table for emos */
-        public final static String TABLE_NAME = "emos";
+        public final static String TABLE_EMOS = "emos";
+
+        public final static String TABLE_NOTES = "notes";
+
 
         /**
          * Unique ID number for the pet (only for use in the database table).
@@ -40,6 +43,7 @@ public final class EmoContract {
         public final static String COLUMN_DATE = "cDate";
         public final static String COLUMN_MONTH = "cMonth";
         public final static String COLUMN_TIMESTAMP = "timestamp";
+        public final static String COLUMN_NOTES = "notes";
 
 
         /**

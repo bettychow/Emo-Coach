@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -26,8 +27,11 @@ import com.example.android.emocoach.data.EmoDbHelper;
 import org.w3c.dom.Text;
 
 import java.io.SyncFailedException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
+import static com.example.android.emocoach.R.id.action_write_emo_notes;
 import static com.example.android.emocoach.R.string.editor_insert_emo_failed;
 import static com.example.android.emocoach.R.string.editor_insert_emo_successful;
 
@@ -38,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView theDate;
     private TextView tvCurrentDate;
     private TextView emotions;
-    private Button btnGoCalendar;
     private Button btnSave;
     private Button btnDummy;
     private Button btnReport;
+    private Button btnChart;
     private int cDay;
     private int cMonth;
     private int cYear;
@@ -58,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
         theDate = (TextView) findViewById(R.id.date);
         tvCurrentDate = (TextView) findViewById((R.id.today));
-        btnGoCalendar = (Button) findViewById(R.id.btnGoCalendar);
         btnSave = (Button) findViewById(R.id.btnSave);
         btnDummy = (Button) findViewById(R.id.addDummy);
         btnReport = (Button) findViewById(R.id.thirty_days_report);
+        btnChart = (Button) findViewById(R.id.thirty_days_swings);
 
 //        Intent incomingIntent = getIntent();
 //        String date = incomingIntent.getStringExtra("date");
@@ -71,18 +75,21 @@ public class MainActivity extends AppCompatActivity {
         cDay = calendar.get(Calendar.DAY_OF_MONTH);
         cMonth = calendar.get(Calendar.MONTH) + 1;
         cYear = calendar.get(Calendar.YEAR);
-        cTime = System.currentTimeMillis();
+
+
+        Date date = new Date();
+        cTime = date.getTime();
+
+        long yourmilliseconds = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+        Date resultdate = new Date(yourmilliseconds);
+        System.out.println(sdf.format(resultdate));
+
 
 
         tvCurrentDate.setText("Today is " + "" + cMonth + "/" + cDay + "/" + cYear);
 
-        btnGoCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +99,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        btnChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ThirtyDaysSwings.class);
+                startActivity(intent);
+            }
+        });
 
 
         rGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
@@ -118,6 +131,16 @@ public class MainActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Calendar calendar = Calendar.getInstance();
+                cDay = calendar.get(Calendar.DAY_OF_MONTH);
+                cMonth = calendar.get(Calendar.MONTH) + 1;
+                cYear = calendar.get(Calendar.YEAR);
+
+
+                Date date = new Date();
+                cTime = date.getTime();
+
                 int selectedRadioButtonID = rGroup.getCheckedRadioButtonId();
                 if (selectedRadioButtonID != -1) {
 
@@ -139,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     values.put(EmoEntry.COLUMN_MONTH, cMonth);
                     values.put(EmoEntry.COLUMN_DATE, cDate);
                     values.put(EmoEntry.COLUMN_TIMESTAMP, cTime);
-                    long newRowId = db.insert(EmoEntry.TABLE_NAME, null, values);
+                    long newRowId = db.insert(EmoEntry.TABLE_EMOS, null, values);
 
                     //Uri newUri = getContentResolver().insert(EmoContract.EmoEntry.CONTENT_URI, values);
 
@@ -176,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 values.put(EmoEntry.COLUMN_MONTH, 5);
                 values.put(EmoEntry.COLUMN_DATE, "5/27/2018");
                 values.put(EmoEntry.COLUMN_TIMESTAMP, 1527404400000L);
-                long newRowId = db.insert(EmoEntry.TABLE_NAME, null, values);
+                long newRowId = db.insert(EmoEntry.TABLE_EMOS, null, values);
                 displayDatabaseInfo();
             }
 
@@ -192,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         cDate = "" + cMonth + "/" + cDay + "/" + cYear;
 
         Cursor cursor = db.query(
-                EmoEntry.TABLE_NAME,
+                EmoEntry.TABLE_EMOS,
                 projection,
                 EmoEntry.COLUMN_DATE +"=?",
                 new String[] {cDate},
@@ -263,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
         cDate = "" + cMonth + "/" + cDay + "/" + cYear;
 
         Cursor cursor = db.query(
-                EmoEntry.TABLE_NAME,
+                EmoEntry.TABLE_EMOS,
                 projection,
                 null,
                 null,
@@ -290,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             // the information from each column in this order.
             displayView.setText("The emos table contains " + cursor.getCount() + " emos.\n\n");
             displayView.append(
-                    EmoEntry._ID + " - " + EmoEntry.COLUMN_EMO_TYPE + " - " + EmoEntry.COLUMN_MONTH + " - " + EmoEntry.COLUMN_DATE);
+                    EmoEntry._ID + " - " + EmoEntry.COLUMN_EMO_TYPE + " - " + EmoEntry.COLUMN_MONTH + " - " + EmoEntry.COLUMN_DATE + " - " + EmoEntry.COLUMN_TIMESTAMP);
 
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex(EmoEntry._ID);
@@ -325,5 +348,26 @@ public class MainActivity extends AppCompatActivity {
         // This adds menu items to the app bar.
         getMenuInflater().inflate(R.menu.menu_currentdate, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent;
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+
+            case R.id.action_go_to_calendar:
+                intent = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(intent);
+                //displayDatabaseInfo();
+                return true;
+            // Respond to a click on the "Delete all entries" menu option
+            case R.id.action_write_emo_notes:
+                intent = new Intent(MainActivity.this, EditNotesActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

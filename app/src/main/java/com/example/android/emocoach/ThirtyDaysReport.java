@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.android.emocoach.data.EmoContract.EmoEntry.TABLE_NAME;
+import static com.example.android.emocoach.data.EmoContract.EmoEntry.TABLE_EMOS;
 
 public class ThirtyDaysReport extends AppCompatActivity{
 
@@ -62,7 +62,7 @@ public class ThirtyDaysReport extends AppCompatActivity{
             EmoContract.EmoEntry._ID,
             EmoContract.EmoEntry.COLUMN_EMO_TYPE};
 
-    Cursor cursor = db.rawQuery("SELECT * FROM " + EmoContract.EmoEntry.TABLE_NAME + " WHERE " + EmoContract.EmoEntry.COLUMN_TIMESTAMP + ">=" + thirtyDaysAgo, null);
+    Cursor cursor = db.rawQuery("SELECT * FROM " + EmoContract.EmoEntry.TABLE_EMOS + " WHERE " + EmoContract.EmoEntry.COLUMN_TIMESTAMP + ">=" + thirtyDaysAgo, null);
 
         //TextView dataView = (TextView) findViewById(R.id.report_data);
 

@@ -19,6 +19,8 @@
         <activity android:name=".CalendarActivity"></activity>
         <activity android:name=".SelectedDateActivity"></activity>
         <activity android:name=".ThirtyDaysReport"></activity>
+        <activity android:name=".ThirtyDaysSwings"></activity>
+        <activity android:name=".EditNotesActivity"></activity>
     </application>
 
 </manifest>

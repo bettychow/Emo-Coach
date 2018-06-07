@@ -7,12 +7,12 @@ xmlns:tools="http://schemas.android.com/tools"
 tools:context=".MainActivity">
 
 <item
-    android:id="@+id/action_insert_dummy_data"
+    android:id="@+id/action_go_to_calendar"
     android:title="GoTo Calendar"
     app:showAsAction="never" />
 
 <item
-    android:id="@+id/action_delete_all_entries"
-    android:title=""
+    android:id="@+id/action_write_emo_notes"
+    android:title="Write Emo Notes"
     app:showAsAction="never" />
 </menu>
