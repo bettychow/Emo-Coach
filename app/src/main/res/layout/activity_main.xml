@@ -46,128 +46,145 @@
         android:text="How are you feeling now?"/>
 
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.example.android.emocoach.RadioGridGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/myRadioGroup"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+    <TableRow android:layout_marginTop="16dp">
 
         <RadioButton
+            android:id="@+id/rad1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/happy"
             android:text="Happy"
-            android:drawableRight="@drawable/happy_emoji_icon_b"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/happy_emoji_icon_b"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/joyful"
-            android:drawableRight="@drawable/new_tears_of_joy_emoji_a"
+            android:text="Joyful"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/new_tears_of_joy_emoji_a"
             android:drawablePadding="5dp"
-            android:text="Joyful"/>
+            />
 
         <RadioButton
+            android:id="@+id/rad3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/peaceful"
-            android:drawableRight="@drawable/heart_eyes_emoji_large_a"
+            android:text="Satisfied"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/heart_eyes_emoji_large_a"
             android:drawablePadding="5dp"
-            android:text="Satisfied"/>
+            />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="16dp">
 
         <RadioButton
+            android:id="@+id/rad4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-343dp"
-            android:layout_marginTop="40dp"
             android:text="Energetic"
-            android:drawableRight="@drawable/sunglasses_cool_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/sunglasses_cool_emoji_a"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="40dp"
             android:text="Excited"
-            android:drawableRight="@drawable/grinning_emoji_with_smiling_eyes_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/grinning_emoji_with_smiling_eyes_a"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="40dp"
             android:text="Peaceful"
-            android:drawableRight="@drawable/slightly_smiling_face_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/slightly_smiling_face_emoji_a"
             android:drawablePadding="5dp"/>
+    </TableRow>
+
+    <TableRow android:layout_marginTop="16dp">
 
         <RadioButton
+            android:id="@+id/rad7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-370dp"
-            android:layout_marginTop="80dp"
             android:text="Sad"
-            android:drawableRight="@drawable/sad_face_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/sad_face_emoji_a"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="80dp"
             android:text="Angry"
-            android:drawableRight="@drawable/angry_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/angry_emoji_a"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="80dp"
             android:text="Guilty"
-            android:drawableRight="@drawable/sweat_emoji_icon_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/sweat_emoji_icon_a"
             android:drawablePadding="5dp"/>
+    </TableRow>
+
+    <TableRow android:layout_marginTop="16dp">
 
         <RadioButton
+            android:id="@+id/rad10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-300dp"
-            android:layout_marginTop="120dp"
             android:text="Furious"
-            android:drawableRight="@drawable/very_angry_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/very_angry_emoji_a"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="120dp"
             android:text="Tired"
-            android:drawableRight="@drawable/tired_face_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/tired_face_emoji_a"
             android:drawablePadding="5dp"/>
 
         <RadioButton
+            android:id="@+id/rad12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="120dp"
             android:text="Frustrated"
-            android:drawableRight="@drawable/confounded_face_emoji_a"
+            android:textAlignment="center"
+            android:drawableTop="@drawable/confounded_face_emoji_a"
             android:drawablePadding="5dp"/>
+    </TableRow>
 
 
-    </RadioGroup>
-
-
+    </com.example.android.emocoach.RadioGridGroup>
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
-        android:text="Save"/>
+        android:text="Save"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/text_view_emo"

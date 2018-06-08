@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private int cYear;
     private long cTime;
     private String cDate;
-    private RadioGroup rGroup;
+    private RadioGridGroup rGroup;
     private RadioButton checkedRadioButton;
     private ListView emoListView;
 
@@ -108,25 +108,50 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        rGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
+//        rGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
+//
+//        emotions = (TextView) findViewById(R.id.emotions);
+//        //checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
+//
+//        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
+//
+//                String radioTextValue = checkedRadioButton.getText().toString();
+//                Drawable radioImgValue = checkedRadioButton.getCompoundDrawables()[2];
+//
+//                emotions.setText(radioTextValue);
+//                emotions.setCompoundDrawablesWithIntrinsicBounds(null, null, radioImgValue, null);
+//            }
+//        });
 
-        emotions = (TextView) findViewById(R.id.emotions);
-        //checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
 
 
 
-        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
+//rGroup2 = (RadioGridGroup) findViewById(myRadioGroup2);
+//
+//        rGroup2.setOnClickListener(new RadioGridGroup.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                int checkedId = rGroup2.getCheckedRadioButtonId();
+//                RadioButton checkedRadioButton = (RadioButton) rGroup2.findViewById(checkedId);
+//
+//                String radioTextValue = checkedRadioButton.getText().toString();
+//                Drawable radioImgValue = checkedRadioButton.getCompoundDrawables()[2];
+//
+//                emotions.setText(radioTextValue);
+//                emotions.setCompoundDrawablesWithIntrinsicBounds(null, null, radioImgValue, null);
+//
+//                System.out.println("RRRRRRRRR====>" + radioTextValue);
+//            }
+//        });
 
-                String radioTextValue = checkedRadioButton.getText().toString();
-                Drawable radioImgValue = checkedRadioButton.getCompoundDrawables()[2];
 
-                emotions.setText(radioTextValue);
-                emotions.setCompoundDrawablesWithIntrinsicBounds(null, null, radioImgValue, null);
-            }
-        });
+
+rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,17 +167,13 @@ public class MainActivity extends AppCompatActivity {
                 cTime = date.getTime();
 
                 int selectedRadioButtonID = rGroup.getCheckedRadioButtonId();
+
+                System.out.println("???????=====>" + selectedRadioButtonID);
                 if (selectedRadioButtonID != -1) {
 
                     RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonID);
                     String selectedRadioButtonText = selectedRadioButton.getText().toString();
                     cDate = "" + cMonth + "/" + cDay + "/" + cYear;
-
-//  This will be a custom object that you write to wrap up your insert, read, etc functionality
-//  You can define some nice functions to wrap up the ContentValues stuff and just return true or false if its successfully written
-//                    EmotionsDatabase edb = new EmotionsDatabase();
-//                    boolean success = ebd.insert(selectedRadioButtonText)
-
 
                     mDbHelper = new EmoDbHelper(getApplicationContext());
                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -164,24 +185,14 @@ public class MainActivity extends AppCompatActivity {
                     values.put(EmoEntry.COLUMN_TIMESTAMP, cTime);
                     long newRowId = db.insert(EmoEntry.TABLE_EMOS, null, values);
 
-                    //Uri newUri = getContentResolver().insert(EmoContract.EmoEntry.CONTENT_URI, values);
-
-//                    if (newUri == null) {
-//                        // If the new content URI is null, then there was an error with insertion.
-//                        Toast.makeText(this, getString(R.string.editor_insert_emo_failed),
-//                                Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        // Otherwise, the insertion was successful and we can display a toast.
-//                        Toast.makeText(this, getString(R.string.editor_insert_emo_successful),
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-
-                    emotions.setText(selectedRadioButtonText + " selected.");
+                    emotions = (TextView) findViewById(R.id.emotions);
+                    emotions.append(selectedRadioButtonText + " selected.");
                     displayDatabaseInfo();
                 } else {
-                    emotions.setText("Nothing selected from Radio Group.");
+                    emotions.append("Nothing selected from Radio Group.");
                     displayDatabaseInfo();
                 }
+
             }
 
 

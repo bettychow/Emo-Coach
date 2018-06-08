@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.android.emocoach.RadioGridGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myRadioGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TableRow android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rad1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button1" />
+
+        <RadioButton
+            android:id="@+id/rad2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button2" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rad3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button3" />
+
+        <RadioButton
+            android:id="@+id/rad4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button4" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rad5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button5" />
+
+        <RadioButton
+            android:id="@+id/rad6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button6" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rad7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button7" />
+
+        <RadioButton
+            android:id="@+id/rad8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button8" />
+    </TableRow>
+</com.example.android.emocoach.RadioGridGroup>

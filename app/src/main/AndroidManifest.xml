@@ -16,11 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CalendarActivity"></activity>
-        <activity android:name=".SelectedDateActivity"></activity>
-        <activity android:name=".ThirtyDaysReport"></activity>
-        <activity android:name=".ThirtyDaysSwings"></activity>
-        <activity android:name=".EditNotesActivity"></activity>
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".SelectedDateActivity" />
+        <activity android:name=".ThirtyDaysReport" />
+        <activity android:name=".ThirtyDaysSwings" />
+        <activity android:name=".EditNotesActivity" />
+        <activity
+            android:name=".NavDrawerActivity"
+            android:label="@string/title_activity_nav_drawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
