@@ -13,7 +13,8 @@ import com.example.android.emocoach.data.EmoDbHelper;
 public class SelectedDateActivity extends AppCompatActivity {
 
     private TextView theDate;
-
+    private TextView feelingsView;
+    private TextView notesView;
 
 
 
@@ -46,7 +47,7 @@ public class SelectedDateActivity extends AppCompatActivity {
                 null
         );
 
-        TextView feelingsView = (TextView) findViewById(R.id.selected_date_feelings);
+        feelingsView = (TextView) findViewById(R.id.selected_date_feelings);
 
         try {
 
@@ -61,6 +62,8 @@ public class SelectedDateActivity extends AppCompatActivity {
                 int id = cursor.getInt(idColumnIndex);
                 String emo = cursor.getString(emoColumnIndex);
 
+                System.out.println("EEEEEEMO ====> " + emo);
+
                 // Display the values from each column of the current row in the cursor in the TextView
                 feelingsView.append("\n" + emo);
             }
@@ -68,6 +71,48 @@ public class SelectedDateActivity extends AppCompatActivity {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
             cursor.close();
+        }
+
+
+        EmoDbHelper mDbHelper2 = new EmoDbHelper(getApplicationContext());
+        SQLiteDatabase db2 = mDbHelper2.getReadableDatabase();
+
+        String[] projection2 = {
+                EmoContract.EmoEntry.COLUMN_NOTES};
+
+
+        Cursor cursor2 = db2.query(
+                EmoContract.EmoEntry.TABLE_NOTES,
+                projection2,
+                EmoContract.EmoEntry.COLUMN_DATE +"=?",
+                new String[] {date},
+                null,
+                null,
+                null
+        );
+
+        notesView = (TextView) findViewById(R.id.selected_date_notes);
+
+        try {
+
+            // Figure out the index of each column
+            int notesColumnIndex = cursor2.getColumnIndex(EmoContract.EmoEntry.COLUMN_NOTES);
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor2.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                String notes = cursor2.getString(notesColumnIndex);
+
+                System.out.println("Notes in selecteddate activity =====> " + notes);
+
+                // Display the values from each column of the current row in the cursor in the TextView
+                notesView.append("\n" + notes);
+            }
+        } finally {
+            // Always close the cursor when you're done reading from it. This releases all its
+            // resources and makes it invalid.
+            cursor2.close();
         }
 
     }

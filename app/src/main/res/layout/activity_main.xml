@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<android.support.design.widget.CoordinatorLayout
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/addDummy"
-        android:text="Add Dummy"/>
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/thirty_days_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/thirty_days_swings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Swings"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
     <TextView
+        android:textColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/today"
-        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
         android:textSize="25sp"
         android:layout_marginTop="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal"
         android:textSize="15sp"
         android:text="How are you feeling now?"/>
 
@@ -50,6 +44,7 @@
         android:id="@+id/myRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal">
 
     <TableRow android:layout_marginTop="16dp">
@@ -58,6 +53,8 @@
             android:id="@+id/rad1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
             android:text="Happy"
             android:textAlignment="center"
             android:drawableTop="@drawable/happy_emoji_icon_b"
@@ -67,6 +64,8 @@
             android:id="@+id/rad2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="10dp"
             android:text="Joyful"
             android:textAlignment="center"
             android:drawableTop="@drawable/new_tears_of_joy_emoji_a"
@@ -77,6 +76,8 @@
             android:id="@+id/rad3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Satisfied"
             android:textAlignment="center"
             android:drawableTop="@drawable/heart_eyes_emoji_large_a"
@@ -90,6 +91,8 @@
             android:id="@+id/rad4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Energetic"
             android:textAlignment="center"
             android:drawableTop="@drawable/sunglasses_cool_emoji_a"
@@ -99,6 +102,8 @@
             android:id="@+id/rad5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Excited"
             android:textAlignment="center"
             android:drawableTop="@drawable/grinning_emoji_with_smiling_eyes_a"
@@ -108,6 +113,8 @@
             android:id="@+id/rad6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Peaceful"
             android:textAlignment="center"
             android:drawableTop="@drawable/slightly_smiling_face_emoji_a"
@@ -120,6 +127,8 @@
             android:id="@+id/rad7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Sad"
             android:textAlignment="center"
             android:drawableTop="@drawable/sad_face_emoji_a"
@@ -129,6 +138,8 @@
             android:id="@+id/rad8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Angry"
             android:textAlignment="center"
             android:drawableTop="@drawable/angry_emoji_a"
@@ -138,6 +149,8 @@
             android:id="@+id/rad9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Guilty"
             android:textAlignment="center"
             android:drawableTop="@drawable/sweat_emoji_icon_a"
@@ -150,6 +163,8 @@
             android:id="@+id/rad10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Furious"
             android:textAlignment="center"
             android:drawableTop="@drawable/very_angry_emoji_a"
@@ -159,6 +174,8 @@
             android:id="@+id/rad11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Tired"
             android:textAlignment="center"
             android:drawableTop="@drawable/tired_face_emoji_a"
@@ -166,8 +183,11 @@
 
         <RadioButton
             android:id="@+id/rad12"
+            android:elevation="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="Frustrated"
             android:textAlignment="center"
             android:drawableTop="@drawable/confounded_face_emoji_a"
@@ -182,8 +202,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
-        android:text="Save"
         android:layout_marginTop="16dp"
+        android:text="Save"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
@@ -195,7 +215,10 @@
         android:id="@+id/feelings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I am feeling..."/>
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:text="I am feeling..."
+        android:layout_marginLeft="20dp"/>
 
     <ListView
     android:id="@+id/list"
@@ -205,9 +228,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:id="@+id/emotions"/>
 
 
-</LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end|right"
+        android:src="@drawable/yellow_pencil_05"
+        android:layout_margin="16dp" />
+
+</android.support.design.widget.CoordinatorLayout>
+
+
+
+

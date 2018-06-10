@@ -130,9 +130,6 @@ public class RadioGridGroup extends TableLayout implements View.OnClickListener 
         setCheckedId(id);
     }
 
-    public void unCheck() {
-        checkedButtonID = -1;
-    }
 
     /**
      * set the checked button Id
@@ -142,6 +139,7 @@ public class RadioGridGroup extends TableLayout implements View.OnClickListener 
     private void setCheckedId(int id) {
         this.checkedButtonID = id;
     }
+
 
     public void clearCheck() {
         check(-1);

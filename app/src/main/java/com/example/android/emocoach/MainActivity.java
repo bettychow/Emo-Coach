@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +33,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.example.android.emocoach.R.id.action_write_emo_notes;
+
 import static com.example.android.emocoach.R.string.editor_insert_emo_failed;
 import static com.example.android.emocoach.R.string.editor_insert_emo_successful;
 
@@ -43,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvCurrentDate;
     private TextView emotions;
     private Button btnSave;
-    private Button btnDummy;
-    private Button btnReport;
-    private Button btnChart;
+    private FloatingActionButton fab;
+
     private int cDay;
     private int cMonth;
     private int cYear;
@@ -63,13 +64,6 @@ public class MainActivity extends AppCompatActivity {
         theDate = (TextView) findViewById(R.id.date);
         tvCurrentDate = (TextView) findViewById((R.id.today));
         btnSave = (Button) findViewById(R.id.btnSave);
-        btnDummy = (Button) findViewById(R.id.addDummy);
-        btnReport = (Button) findViewById(R.id.thirty_days_report);
-        btnChart = (Button) findViewById(R.id.thirty_days_swings);
-
-//        Intent incomingIntent = getIntent();
-//        String date = incomingIntent.getStringExtra("date");
-//        theDate.setText(date);
 
         Calendar calendar = Calendar.getInstance();
         cDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -85,73 +79,54 @@ public class MainActivity extends AppCompatActivity {
         Date resultdate = new Date(yourmilliseconds);
         System.out.println(sdf.format(resultdate));
 
-
-
         tvCurrentDate.setText("Today is " + "" + cMonth + "/" + cDay + "/" + cYear);
 
+        mDbHelper = new EmoDbHelper(getApplicationContext());
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
+        String[] projection = {
+                EmoEntry._ID,
+                EmoEntry.COLUMN_EMO_TYPE};
+        cDate = "" + cMonth + "/" + cDay + "/" + cYear;
 
-        btnReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ThirtyDaysReport.class);
-                startActivity(intent);
+        Cursor cursor = db.query(
+                EmoEntry.TABLE_EMOS,
+                projection,
+                EmoEntry.COLUMN_DATE +"=?",
+                new String[] {cDate},
+                null,
+                null,
+                null
+        );
+
+        TextView feelingsView = (TextView) findViewById(R.id.feelings);
+        emotions = (TextView) findViewById(R.id.emotions);
+
+        try {
+
+            // Figure out the index of each column
+            int idColumnIndex = cursor.getColumnIndex(EmoEntry._ID);
+            int emoColumnIndex = cursor.getColumnIndex(EmoEntry.COLUMN_EMO_TYPE);
+
+            // Iterate through all the returned rows in the cursor
+            while (cursor.moveToNext()) {
+                // Use that index to extract the String or Int value of the word
+                // at the current row the cursor is on.
+                int currentID = cursor.getInt(idColumnIndex);
+                String currentEmo = cursor.getString(emoColumnIndex);
+
+                // Display the values from each column of the current row in the cursor in the TextView
+                emotions.append("\n" + currentEmo);
             }
-        });
-
-        btnChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ThirtyDaysSwings.class);
-                startActivity(intent);
-            }
-        });
-
-
-//        rGroup = (RadioGroup) findViewById(R.id.myRadioGroup);
-//
-//        emotions = (TextView) findViewById(R.id.emotions);
-//        //checkedRadioButton = (RadioButton)rGroup.findViewById(rGroup.getCheckedRadioButtonId());
-//
-//        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
-//
-//                String radioTextValue = checkedRadioButton.getText().toString();
-//                Drawable radioImgValue = checkedRadioButton.getCompoundDrawables()[2];
-//
-//                emotions.setText(radioTextValue);
-//                emotions.setCompoundDrawablesWithIntrinsicBounds(null, null, radioImgValue, null);
-//            }
-//        });
+        } finally {
+            // Always close the cursor when you're done reading from it. This releases all its
+            // resources and makes it invalid.
+            cursor.close();
+        }
 
 
 
-
-//rGroup2 = (RadioGridGroup) findViewById(myRadioGroup2);
-//
-//        rGroup2.setOnClickListener(new RadioGridGroup.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                int checkedId = rGroup2.getCheckedRadioButtonId();
-//                RadioButton checkedRadioButton = (RadioButton) rGroup2.findViewById(checkedId);
-//
-//                String radioTextValue = checkedRadioButton.getText().toString();
-//                Drawable radioImgValue = checkedRadioButton.getCompoundDrawables()[2];
-//
-//                emotions.setText(radioTextValue);
-//                emotions.setCompoundDrawablesWithIntrinsicBounds(null, null, radioImgValue, null);
-//
-//                System.out.println("RRRRRRRRR====>" + radioTextValue);
-//            }
-//        });
-
-
-
-rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
+        rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +136,7 @@ rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
                 cDay = calendar.get(Calendar.DAY_OF_MONTH);
                 cMonth = calendar.get(Calendar.MONTH) + 1;
                 cYear = calendar.get(Calendar.YEAR);
-
+                emotions = (TextView) findViewById(R.id.emotions);
 
                 Date date = new Date();
                 cTime = date.getTime();
@@ -185,80 +160,28 @@ rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
                     values.put(EmoEntry.COLUMN_TIMESTAMP, cTime);
                     long newRowId = db.insert(EmoEntry.TABLE_EMOS, null, values);
 
-                    emotions = (TextView) findViewById(R.id.emotions);
-                    emotions.append(selectedRadioButtonText + " selected.");
-                    displayDatabaseInfo();
+
+                    emotions.append("\n" + selectedRadioButtonText);
+//                    displayDatabaseInfo();
                 } else {
-                    emotions.append("Nothing selected from Radio Group.");
-                    displayDatabaseInfo();
+                    //emotions.append("Nothing selected from Radio Group.");
+//                    displayDatabaseInfo();
                 }
 
+                rGroup.clearCheck();
             }
-
 
         });
 
-        btnDummy.setOnClickListener(new View.OnClickListener() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mDbHelper = new EmoDbHelper(getApplicationContext());
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-
-                ContentValues values = new ContentValues();
-                values.put(EmoEntry.COLUMN_EMO_TYPE, "Frustrated");
-                values.put(EmoEntry.COLUMN_MONTH, 5);
-                values.put(EmoEntry.COLUMN_DATE, "5/27/2018");
-                values.put(EmoEntry.COLUMN_TIMESTAMP, 1527404400000L);
-                long newRowId = db.insert(EmoEntry.TABLE_EMOS, null, values);
-                displayDatabaseInfo();
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EditNotesActivity.class);
+                startActivity(intent);
             }
-
-
         });
-
-        mDbHelper = new EmoDbHelper(getApplicationContext());
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
-        String[] projection = {
-                EmoEntry._ID,
-                EmoEntry.COLUMN_EMO_TYPE};
-        cDate = "" + cMonth + "/" + cDay + "/" + cYear;
-
-        Cursor cursor = db.query(
-                EmoEntry.TABLE_EMOS,
-                projection,
-                EmoEntry.COLUMN_DATE +"=?",
-                new String[] {cDate},
-                null,
-                null,
-                null
-        );
-
-        TextView feelingsView = (TextView) findViewById(R.id.feelings);
-
-        try {
-
-            // Figure out the index of each column
-            int idColumnIndex = cursor.getColumnIndex(EmoEntry._ID);
-            int emoColumnIndex = cursor.getColumnIndex(EmoEntry.COLUMN_EMO_TYPE);
-
-            // Iterate through all the returned rows in the cursor
-            while (cursor.moveToNext()) {
-                // Use that index to extract the String or Int value of the word
-                // at the current row the cursor is on.
-                int currentID = cursor.getInt(idColumnIndex);
-                String currentEmo = cursor.getString(emoColumnIndex);
-
-                // Display the values from each column of the current row in the cursor in the TextView
-                feelingsView.append("\n" + currentEmo);
-            }
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
-        }
-
 
 
     }
@@ -266,7 +189,7 @@ rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
     @Override
     protected void onStart() {
         super.onStart();
-        displayDatabaseInfo();
+//        displayDatabaseInfo();
 
     }
 
@@ -353,6 +276,10 @@ rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
         }
     }
 
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_catalog.xml file.
@@ -367,7 +294,6 @@ rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
         Intent intent;
         // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-
             case R.id.action_go_to_calendar:
                 intent = new Intent(MainActivity.this, CalendarActivity.class);
                 startActivity(intent);
@@ -378,6 +304,13 @@ rGroup = (RadioGridGroup) findViewById(R.id.myRadioGroup);
                 intent = new Intent(MainActivity.this, EditNotesActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_thirty_days_piechart:
+                intent = new Intent((MainActivity.this), ThirtyDaysReport.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_thirty_days_chart:
+                intent = new Intent(MainActivity.this, ThirtyDaysSwings.class);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

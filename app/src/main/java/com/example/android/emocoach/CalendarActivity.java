@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -50,4 +52,40 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_catalog.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_calendar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent;
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+
+            case R.id.action_home:
+                intent = new Intent(CalendarActivity.this, MainActivity.class);
+                startActivity(intent);
+                //displayDatabaseInfo();
+                return true;
+            // Respond to a click on the "Delete all entries" menu option
+            case R.id.action_write_emo_notes:
+                intent = new Intent(CalendarActivity.this, EditNotesActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_thirty_days_piechart:
+                intent = new Intent(CalendarActivity.this, ThirtyDaysReport.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_thirty_days_chart:
+                intent = new Intent(CalendarActivity.this, ThirtyDaysSwings.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
