@@ -12,13 +12,8 @@ tools:context=".MainActivity">
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_write_emo_notes"
-        android:title="Write Emo Notes"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_thirty_days_piechart"
-        android:title="30-day Emo Piechart" />
+        android:title="30-day Emo Report" />
 
     <item
         android:id="@+id/action_thirty_days_chart"

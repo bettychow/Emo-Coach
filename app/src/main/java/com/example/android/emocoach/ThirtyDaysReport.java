@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.android.emocoach.data.EmoContract;
@@ -107,13 +109,8 @@ public class ThirtyDaysReport extends AppCompatActivity{
     });
 
 
-
         String [] dedupEmosArr = dedupEmosList.toArray(new String[dedupEmosList.size()]);
         Integer [] emosCountsArr = emosCountsList.toArray(new Integer[emosCountsList.size()]);
-
-
-//        System.out.println("dddeeeeeeee=====>" + dedupEmosArr);
-//        System.out.println("EmmmmossssArrr ======>" + emosCountsArr);
 
         List<PieEntry> pieEntries = new ArrayList<>();
 
@@ -124,7 +121,7 @@ public class ThirtyDaysReport extends AppCompatActivity{
         }
 
         PieDataSet dataset = new PieDataSet((pieEntries), "Emotions in past 30 days");
-        dataset.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataset.setColors(ColorTemplate.MATERIAL_COLORS);
         PieData data = new PieData(dataset);
 
         PieChart chart = (PieChart) findViewById(R.id.chart);
@@ -170,6 +167,37 @@ public class ThirtyDaysReport extends AppCompatActivity{
 
         return result;
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_catalog.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_thirty_days_report, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Intent intent;
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+            case R.id.action_home:
+                intent = new Intent(ThirtyDaysReport.this, MainActivity.class);
+                startActivity(intent);
+                //displayDatabaseInfo();
+                return true;
+            case R.id.action_go_to_calendar:
+                intent = new Intent(ThirtyDaysReport.this, CalendarActivity.class);
+                startActivity(intent);
+                //displayDatabaseInfo();
+                return true;
+            case R.id.action_thirty_days_chart:
+                intent = new Intent(ThirtyDaysReport.this, ThirtyDaysSwings.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

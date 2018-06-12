@@ -32,7 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.example.android.emocoach.R.id.action_write_emo_notes;
 
 import static com.example.android.emocoach.R.string.editor_insert_emo_failed;
 import static com.example.android.emocoach.R.string.editor_insert_emo_successful;
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        displayDatabaseInfo();
+        //displayDatabaseInfo();
 
     }
 
@@ -298,11 +297,6 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(MainActivity.this, CalendarActivity.class);
                 startActivity(intent);
                 //displayDatabaseInfo();
-                return true;
-            // Respond to a click on the "Delete all entries" menu option
-            case R.id.action_write_emo_notes:
-                intent = new Intent(MainActivity.this, EditNotesActivity.class);
-                startActivity(intent);
                 return true;
             case R.id.action_thirty_days_piechart:
                 intent = new Intent((MainActivity.this), ThirtyDaysReport.class);

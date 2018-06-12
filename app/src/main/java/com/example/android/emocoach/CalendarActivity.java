@@ -20,8 +20,6 @@ public class CalendarActivity extends AppCompatActivity {
     private CalendarView mCalendarView;
     private int cMonth;
     private int cYear;
-    private Button btnReport;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,11 +69,6 @@ public class CalendarActivity extends AppCompatActivity {
                 intent = new Intent(CalendarActivity.this, MainActivity.class);
                 startActivity(intent);
                 //displayDatabaseInfo();
-                return true;
-            // Respond to a click on the "Delete all entries" menu option
-            case R.id.action_write_emo_notes:
-                intent = new Intent(CalendarActivity.this, EditNotesActivity.class);
-                startActivity(intent);
                 return true;
             case R.id.action_thirty_days_piechart:
                 intent = new Intent(CalendarActivity.this, ThirtyDaysReport.class);
